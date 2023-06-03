@@ -26,7 +26,7 @@ A python editing program like Thonny
 1) Open the terminal and navigate to the directory you want to install the program on with "cd path/to/directory]"
 2) Run the command:
 ```bash
-git clone https://github.com/https://github.com/EuroNutellaMan/CoupPreparationSimulator.git
+git clone https://github.com/EuroNutellaMan/CoupPreparationSimulator.git
 ```
 3) navigate into the repository with:
 ```bash
