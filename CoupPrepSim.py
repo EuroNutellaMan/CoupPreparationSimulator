@@ -1,10 +1,12 @@
 #
 # Coup preparation sim
 # by EuroNutella
-# Last update: 24/05/2023
+# Last update: 09/06/2023
 #
 import random
 import time
+import pyfiglet
+import subprocess
 
 RED = "\033[1;31m"
 BLUE = "\033[1;34m"
@@ -15,6 +17,19 @@ PURPLE = "\033[1;35m"
 CYAN = "\033[1;36m"
 RESET = "\033[0m"
 
+figlet = pyfiglet.Figlet(font="bulbhead")
+winfig = pyfiglet.Figlet(font="rectangles")
+
+coup = figlet.renderText("          COUP")
+preparation = figlet.renderText("PREPARATION")
+simulator = figlet.renderText("  SIMULATOR")
+
+print()
+print(PURPLE, coup, RESET, sep='')
+print(CYAN, preparation, RESET, sep='')
+print(GREEN, simulator, RESET, sep='')
+print()
+
 viewcount = 0
 
 # Coupers
@@ -22,13 +37,13 @@ pInvolved = []
 pUninvolved = []
 pInvPops = []
 pUninvPops = []
-pTotSeats = 720
+pTotSeats = int(input("Number of seats in your parliament: "))
 AllowedActions = []
 
 # Coup starter
 pStart = input('Which party is starting the coup? ')
 pInvolved.append(pStart)
-pStartPop = input('How many seats do they have? (Parliament has max 720 seats) ')
+pStartPop = input('Seats: ')
 pStartPop = int(pStartPop)
 pInvPops.append(pStartPop)
 
@@ -217,8 +232,9 @@ def CoupActions():
     print('|!! CHOOSE ACTION !!|')
     print('---------------------')
     if Funds >= 5:
-        print('pi = invite a party to the coup (5 funds)')
-        AllowedActions.append('pi')
+        if len(pUninvolved) > 0:
+            print('pi = invite a party to the coup (5 funds)')
+            AllowedActions.append('pi')
         print('df = start a disinformation campaign (5 funds)')
         AllowedActions.append('df')
         print('gi = gather intelligence (5 funds)')
@@ -574,8 +590,9 @@ def GovActions():
         print("rw = raid weapon storage (3 intel)")
         gAllowedActions.append("ge")
         print("ge = gather equipment")
-        gAllowedActions.append("ip")
-        print("ip = invite party to support the government")
+        if len(gUninvolved) > 0:
+            gAllowedActions.append("ip")
+            print("ip = invite party to support the government")
         gAllowedActions.append("ek")
         print("ek = ensure key support")
         gAllowedActions.append("em")
@@ -917,21 +934,31 @@ def gArrLeads():
 
 # Launch the coup
 def CoupLaunch():
-    print(PURPLE,"=================",sep='')
-    print("| COUP LAUNCHED |")
-    print("=================",RESET,sep='')
-    print("NOTICE: This part is still WIP. For now the simulator ends here. Thanks for trying this beta.")
-    print("Please if you have any problem or feedback make sure to let me know on Discord.")
-    print("If you get an error please explain to me what you did and copy the error.")
-    print("Alternaively you can copy the whole terminal in a text file and send it to me.")
+    CoupPop = str(round(sum(pInvPops) / pTotSeats * 100, 0))
+    MilPop = str(iMilPop + nMilPop)
+    PolPop = str(iPolPop + nPolPop)
+    KeySup = str(iKeySup + nKeySup)
+    WeapStr = str(iWeapStr + nWeapStr)
+    Intel = str(iIntel + nIntel)
+    GovPop = str(round(sum(gInvPops) / pTotSeats * 100, 0))
+    gMilPop = str(igMilPop + ngMilPop)
+    gPolPop = str(igPolPop + ngPolPop)
+    gKeySup = str(igKeySup + ngKeySup)
+    gWeapStr = str(igWeapStr + ngWeapStr)
+    gIntel = str(igIntel + ngIntel)
+    pInv_str = ";".join(str(element) for element in pInvolved)
+    pInvPops_str = ";".join(str(element) for element in pInvPops)
+    gInv_str = ";".join(str(element) for element in gInvolved)
+    gInvPops_str = ";".join(str(element) for element in gInvPops)
+    command = ["python3","CoupLaunch.py",CoupPop,MilPop,PolPop,KeySup,WeapStr,Intel,GovPop,gMilPop,gPolPop,gKeySup,gWeapStr,gIntel,pInv_str,pInvPops_str,gInv_str,gInvPops_str]
+    subprocess.run(command)
 
 # Victory screens
 
 # Coup prevented
 def GovPrevCoup():
-    print(CYAN,"############################",sep='')
-    print("#### GOVERNMENT VICTORY ####")
-    print("############################")
+    GovWin = winfig.renderText("Government Wins")
+    print(CYAN,GovWin,sep='')
     print()
     print("We have successfully prevented a coup on our government!")
     for i in range(len(pInvolved)):
@@ -958,8 +985,9 @@ def GovPrevCoup():
 # Starting text
 print(PURPLE,"As the head of ",pInvolved[0]," you have decided that enough is enough. Your country needs a new leader, and that is you!",sep='')
 print("Unfortunately the elections weren't enough to secure the victory you rightfully deserve and now a weak government stands in your way.")
-print("Our party currently has ",pInvPops[0]," seats out of 720.",sep='')
-print("There are ",len(pUninvolved)," potential partners that may join our cause too.",sep='')
+print("Our party currently has ",pInvPops[0]," seats out of ",pTotSeats,".",sep='')
+if len(pUninvolved) > 0:
+    print("There are ",len(pUninvolved)," potential partners that may join our cause too.",sep='')
 print(RESET)
 
 time.sleep(5)
