@@ -104,7 +104,7 @@ igMilPop = random.randint(0, min(int(round(GovPop/2,0)), 100 - iMilPop))
 igPolPop = random.randint(0, GovPop)
 igKeySup = random.randint(0, min(int(round(GovPop/2,0)), 100 - iKeySup))
 igWeapStr = random.randint(50,100)
-igIntel = 0
+igIntel = 1
 
 # New gov values
 ngMilPop = 0
@@ -983,7 +983,8 @@ def GovPrevCoup():
             print(CYAN,"Citizens move on with their day to day life.",RESET,sep='')
 
 # Starting text
-print(PURPLE,"As the head of ",pInvolved[0]," you have decided that enough is enough. Your country needs a new leader, and that is you!",sep='')
+print(PURPLE)
+print("As the head of ",pInvolved[0]," you have decided that enough is enough. Your country needs a new leader, and that is you!",sep='')
 print("Unfortunately the elections weren't enough to secure the victory you rightfully deserve and now a weak government stands in your way.")
 print("Our party currently has ",pInvPops[0]," seats out of ",pTotSeats,".",sep='')
 if len(pUninvolved) > 0:
