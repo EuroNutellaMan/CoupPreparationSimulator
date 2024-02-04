@@ -1,7 +1,7 @@
 #
-# Coup Launcher (part of CoupPrepSim
+# Coup Launcher (part of CoupPrepSim)
 # by EuroNutella
-# Last update: 09/06/2023
+# Last update: 30/09/2023
 #
 import sys
 import pyfiglet
@@ -460,6 +460,7 @@ sezIntr()
 
 time.sleep(2)
 recalc()
+
 ### Beta disclaimer
 
 time.sleep(2)
