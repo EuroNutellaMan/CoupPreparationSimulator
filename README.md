@@ -1,5 +1,7 @@
 # CoupPreparationSimulator
 
+This repository has been moved to [codeberg](https://codeberg.org/EuroNutellaMan/CoupPreparationSimulator)
+
 This is a beta for a Coup Preparation Simulator.
 
 It allows you to prepare a coup in your roleplay nation. As of now it assumes you're in a democratic state with a 720 seats parliament, it has 1 victory scenario for the government and it ends when the coup is launched.
